@@ -11,13 +11,29 @@ public class NoteService {
     private NoteRepository noteRepository;
 
     @Transactional
-    public NoteEntity insertNote(String title){
+    public NoteEntity insertNote(String title) {
         NoteEntity noteEntity = new NoteEntity();
         noteEntity.setTitle(title);
         return noteRepository.save(noteEntity);
     }
 
-    public Iterable<NoteEntity> getAllNotes(){
+    @Transactional
+    public NoteEntity updateNote(long id, String title) {
+        NoteEntity noteEntity = getNoteById(id);
+        noteEntity.setTitle(title);
+        return  noteEntity;
+    }
+
+    @Transactional
+    public void deleteNoteById(long id){
+        noteRepository.deleteById(id);
+    }
+
+    public NoteEntity getNoteById(long id) {
+        return noteRepository.findById(id).orElse(null);
+    }
+
+    public Iterable<NoteEntity> getAllNotes() {
         return noteRepository.findAll();
     }
 }
