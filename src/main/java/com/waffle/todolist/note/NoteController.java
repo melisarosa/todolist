@@ -14,9 +14,19 @@ public class NoteController {
         return noteService.insertNote(note.getTitle());
     }
 
+    @PostMapping("/{id}/details")
+    public NoteDetailEntity insertNoteDetail(@PathVariable("id") long noteId, @RequestBody NoteDetailEntity noteDetail) {
+        return noteService.insertNoteDetail(noteId, noteDetail);
+    }
+
     @GetMapping
     public Iterable<NoteEntity> getAllNotes() {
         return noteService.getAllNotes();
+    }
+
+    @GetMapping("/{id}/details")
+    public Iterable<NoteDetailEntity> getNoteDetails(@PathVariable("id") long noteId){
+        return  noteService.getNoteDetails(noteId);
     }
 
     @GetMapping("/{id}")

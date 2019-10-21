@@ -9,6 +9,8 @@ public class NoteService {
 
     @Autowired
     private NoteRepository noteRepository;
+    @Autowired
+    private NoteDetailRepository noteDetailRepository;
 
     @Transactional
     public NoteEntity insertNote(String title) {
@@ -35,5 +37,18 @@ public class NoteService {
 
     public Iterable<NoteEntity> getAllNotes() {
         return noteRepository.findAll();
+    }
+
+    @Transactional
+    public NoteDetailEntity insertNoteDetail(long noteId, NoteDetailEntity noteDetailEntity) {
+        NoteEntity noteEntity = new NoteEntity();
+        noteEntity.setId(noteId);
+        noteDetailEntity.setNote(noteEntity);
+        noteDetailEntity.setDone(false);
+        return noteDetailRepository.save(noteDetailEntity);
+    }
+
+    public Iterable<NoteDetailEntity> getNoteDetails(long noteId) {
+        return noteDetailRepository.findByNoteId(noteId);
     }
 }
